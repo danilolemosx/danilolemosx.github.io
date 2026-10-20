@@ -71,7 +71,13 @@
   .desc { color: #c4c1ba; margin: 18px 0 14px; }
   .feats { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 6px; }
   .feats li { padding-left: 20px; position: relative; color: #a9a6a0; font-size: .95rem; }
-  .req { margin: -8px 0 20px; padding: 8px 12px; border-left: 2px solid var(--c); background: color-mix(in srgb, var(--c) 8%, transparent); border-radius: 0 6px 6px 0; font-family: var(--mono); font-size: .72rem; color: #c4c1ba; line-height: 1.5; }
+  .req { margin: -6px 0 22px; padding: 12px 14px; border: 1px solid color-mix(in srgb, var(--c) 35%, var(--line)); border-radius: 10px; background: color-mix(in srgb, var(--c) 7%, transparent); }
+  .req-h { display: block; font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--c); margin-bottom: 8px; }
+  .req dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 5px 14px; font-size: .88rem; }
+  .req dt { font-family: var(--mono); font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; padding-top: .2em; }
+  .req dd { margin: 0; color: #c4c1ba; }
+  .req b { color: var(--ink); font-weight: 600; }
+  @media (max-width: 480px) { .req dl { grid-template-columns: 1fr; gap: 0; } .req dd { margin-bottom: 6px; } }
   .feats li::before { content: ""; position: absolute; left: 0; top: .62em; width: 9px; height: 2px; background: var(--c); }
   .dl { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px; }
   .btn {
@@ -254,7 +260,14 @@ const APPS = [
   { repo: "sfx-maker", name: "SFX Maker", kind: "Som · foley por IA", color: "#f0607a", icon: "spark", dir: "sfxmaker",
     desc: "Foley guia para o offline. Exporte um AAF consolidado do Avid: o app gera um som para cada clipe e devolve um AAF sincronizado. Tudo roda no seu Mac; nada do material sai da máquina.",
     feats: ["Um SFX por clipe da V1, com HunyuanVideo-Foley", "Descreva o som em português, ou deixe o app decidir pela imagem", "AAF de volta no timecode, mais WAVs 48 kHz / 24 bit"],
-    req: "Só Mac com chip M · 32 GB de memória (16 GB funciona, mais lento) · baixa ~16 GB na primeira abertura",
+    extra: "+ ~16 GB na 1ª abertura",
+    req: [
+      ["Instalador", "3 MB. Na primeira abertura, o app baixa o motor de IA: <b>~16 GB</b>, de 15 min a 1 h conforme a internet"],
+      ["Disco", "<b>~25 GB livres</b>"],
+      ["Mac", "só com chip M (M1 a M4), macOS 12.3 ou mais novo"],
+      ["Memória", "<b>32 GB</b> para a velocidade normal; com 16 GB funciona em modo econômico, mais lento"],
+      ["Depois", "funciona sem internet, e nada do seu material sai do Mac"],
+    ],
     shots: [
       ["Arraste o AAF", "Exporte do Avid com Consolidate e a mídia embutida. Cada clipe da V1 vira uma linha: descreva o som em português (\"passos de bota na grama\", não \"soldado caminhando\") ou deixe em branco para o app decidir pela imagem. O AAF de saída volta com os sons no timecode certo, numa pasta \"SFX MAKER\" ao lado do original."],
       ["Preparar este Mac", "Na primeira vez, o app baixa o motor de IA: uns 16 GB, de 15 minutos a 1 hora conforme a internet. Depois funciona sem internet. Em Macs de 16 GB, ele entra em modo econômico."],
@@ -300,7 +313,7 @@ async function render(app) {
       <div><div class="kind">${app.kind}</div><h3>${app.name}</h3></div></div>
     <p class="desc">${app.desc}</p>
     <ul class="feats">${app.feats.map(f => `<li>${f}</li>`).join("")}</ul>
-    ${app.req ? `<p class="req">${app.req}</p>` : ""}
+    ${app.req ? `<div class="req"><span class="req-h">Antes de baixar</span><dl>${app.req.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></div>` : ""}
     <div class="dl"><span class="soon">carregando…</span></div>
     <div class="meta"></div>`;
   document.getElementById("apps").appendChild(el);
@@ -318,7 +331,7 @@ async function render(app) {
     let first = true;
     dl.innerHTML = files.map(({ a, k }) => {
       const main = first && k.os === os; if (main) first = false;
-      return `<a class="btn${main ? " main" : ""}" href="${a.browser_download_url}">${k.label}<small>${k.sub} · ${mb(a.size)}</small></a>`;
+      return `<a class="btn${main ? " main" : ""}" href="${a.browser_download_url}">${k.label}<small>${k.sub} · ${mb(a.size)}${app.extra ? ` ${app.extra}` : ""}</small></a>`;
     }).join("");
     meta.innerHTML = `<span>${rel.tag_name} · ${new Date(rel.published_at).toLocaleDateString("pt-BR")}</span>
       <span><a href="${page}/releases">novidades</a> · <a href="${page}">código-fonte</a></span>`;
