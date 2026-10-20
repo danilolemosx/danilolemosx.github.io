@@ -71,6 +71,7 @@
   .desc { color: #c4c1ba; margin: 18px 0 14px; }
   .feats { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 6px; }
   .feats li { padding-left: 20px; position: relative; color: #a9a6a0; font-size: .95rem; }
+  .req { margin: -8px 0 20px; padding: 8px 12px; border-left: 2px solid var(--c); background: color-mix(in srgb, var(--c) 8%, transparent); border-radius: 0 6px 6px 0; font-family: var(--mono); font-size: .72rem; color: #c4c1ba; line-height: 1.5; }
   .feats li::before { content: ""; position: absolute; left: 0; top: .62em; width: 9px; height: 2px; background: var(--c); }
   .dl { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px; }
   .btn {
@@ -216,6 +217,7 @@ const ICONS = {
   wave:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 12h2M7 8v8M11 5v14M15 9v6M19 7v10M21 12h0"/></svg>',
   box:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>',
   search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21M7.5 10.5h1M10 8v5M12.5 9.5v2"/></svg>',
+  spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3l1.8 4.7L16.5 9.5l-4.7 1.8L10 16l-1.8-4.7L3.5 9.5l4.7-1.8z"/><path d="M18 14l.9 2.1L21 17l-2.1.9L18 20l-.9-2.1L15 17l2.1-.9z"/></svg>',
   voice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
 };
 // Para adicionar um app: inclua um item aqui. Os instaladores vêm sozinhos da última Release do repositório.
@@ -248,6 +250,14 @@ const APPS = [
       ["Busca", "Digite em português ou em inglês: \"porta batendo\" também procura \"door slam\" e \"door knock\". Filtre por duração, qualidade, canais e gosto, ou navegue por biblioteca. Cada som mostra a forma de onda, o formato e se já foi usado em outro projeto."],
       ["Primeira vez", "Escolha a pasta do seu banco de sons. O app lê tudo uma vez e guarda um índice (62 mil sons levam uns 12 minutos num HD); dá para buscar enquanto ele termina. Depois, abre na hora."],
       ["A cesta", "Enter põe o som na cesta, com o nome traduzido e encurtado. Escolha a pasta do episódio e a subpasta temática, e copie o original ou converta em WAV, MXF Avid, AIFF ou MP3, com um ORIGEM.txt contando de onde veio cada som."],
+    ] },
+  { repo: "sfx-maker", name: "SFX Maker", kind: "Som · foley por IA", color: "#f0607a", icon: "spark", dir: "sfxmaker",
+    desc: "Foley guia para o offline. Exporte um AAF consolidado do Avid: o app gera um som para cada clipe e devolve um AAF sincronizado. Tudo roda no seu Mac; nada do material sai da máquina.",
+    feats: ["Um SFX por clipe da V1, com HunyuanVideo-Foley", "Descreva o som em português, ou deixe o app decidir pela imagem", "AAF de volta no timecode, mais WAVs 48 kHz / 24 bit"],
+    req: "Só Mac com chip M · 32 GB de memória (16 GB funciona, mais lento) · baixa ~16 GB na primeira abertura",
+    shots: [
+      ["Arraste o AAF", "Exporte do Avid com Consolidate e a mídia embutida. Cada clipe da V1 vira uma linha: descreva o som em português (\"passos de bota na grama\", não \"soldado caminhando\") ou deixe em branco para o app decidir pela imagem. O AAF de saída volta com os sons no timecode certo, numa pasta \"SFX MAKER\" ao lado do original."],
+      ["Preparar este Mac", "Na primeira vez, o app baixa o motor de IA: uns 16 GB, de 15 minutos a 1 hora conforme a internet. Depois funciona sem internet. Em Macs de 16 GB, ele entra em modo econômico."],
     ] },
   { repo: "decanta-plugin", name: "Decanta", kind: "Som · plugin", color: "#3ec29a", icon: "voice", coverPos: "center 45%",
     desc: "Limpeza de diálogo com DeepFilterNet. Plugin VST3, AU e AAX para Media Composer, Pro Tools, Premiere, Resolve e Logic.",
@@ -282,7 +292,7 @@ async function render(app) {
   const el = document.createElement("article");
   el.className = "app";
   el.style.setProperty("--c", app.color);
-  const dir = app.repo.split("-")[0];
+  const dir = app.dir || app.repo.split("-")[0];
   el.innerHTML = `
     ${app.shots ? `<button class="cover" aria-label="Ver fotos do ${app.name}"><img src="fotos/${dir}/1.jpg" alt="" loading="lazy"${app.coverPos ? ` style="object-position:${app.coverPos}"` : ""}>
       <span class="cover-tag"><i>▶</i>${app.shots.length > 1 ? `VER ${app.shots.length} FOTOS` : "VER DE PERTO"}</span></button>` : ""}
@@ -290,6 +300,7 @@ async function render(app) {
       <div><div class="kind">${app.kind}</div><h3>${app.name}</h3></div></div>
     <p class="desc">${app.desc}</p>
     <ul class="feats">${app.feats.map(f => `<li>${f}</li>`).join("")}</ul>
+    ${app.req ? `<p class="req">${app.req}</p>` : ""}
     <div class="dl"><span class="soon">carregando…</span></div>
     <div class="meta"></div>`;
   document.getElementById("apps").appendChild(el);
@@ -323,7 +334,7 @@ let cur = null, idx = 0;
 function openSlides(app, i) {
   cur = app; box.style.setProperty("--c", app.color);
   box.querySelector(".sl-app").textContent = app.name;
-  const dir = app.repo.split("-")[0];
+  const dir = app.dir || app.repo.split("-")[0];
   box.querySelector(".sl-thumbs").innerHTML = app.shots.map((s, k) => `<button aria-label="${s[0]}" data-k="${k}"><img src="fotos/${dir}/${k + 1}-mini.jpg" alt=""></button>`).join("");
   box.querySelectorAll(".sl-thumbs button").forEach(b => b.onclick = () => show(+b.dataset.k));
   box.classList.toggle("single", app.shots.length < 2);
@@ -332,7 +343,7 @@ function openSlides(app, i) {
 }
 function show(i) {
   const n = cur.shots.length; idx = (i + n) % n;
-  const [title, text] = cur.shots[idx], dir = cur.repo.split("-")[0];
+  const [title, text] = cur.shots[idx], dir = cur.dir || cur.repo.split("-")[0];
   const img = box.querySelector(".sl-img");
   img.classList.remove("in"); void img.offsetWidth;
   img.src = `fotos/${dir}/${idx + 1}.jpg`; img.alt = title; img.classList.add("in");
