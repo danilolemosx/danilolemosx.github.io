@@ -226,6 +226,7 @@ const ICONS = {
   spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3l1.8 4.7L16.5 9.5l-4.7 1.8L10 16l-1.8-4.7L3.5 9.5l4.7-1.8z"/><path d="M18 14l.9 2.1L21 17l-2.1.9L18 20l-.9-2.1L15 17l2.1-.9z"/></svg>',
   voice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
   meter: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3.5 17a8.5 8.5 0 0 1 17 0"/><path d="M12 17l4.5-5.5M6.5 11.5l1 1M12 8.5V10M17.5 11.5l-1 1M3 20h18"/></svg>',
+  room:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6v10H3z"/><path d="M9 15.5a3 3 0 0 1 0-3M12 17.5a6 6 0 0 1 0-7M6.5 14h.01"/></svg>',
 };
 // Para adicionar um app: inclua um item aqui. Os instaladores vêm sozinhos da última Release do repositório.
 const APPS = [
@@ -284,6 +285,13 @@ const APPS = [
     feats: ["MUSIC −14, INTERNET −16 ou TV EBU R128 −23 LUFS; ATSC no avançado", "No AudioSuite do Avid, mede o clip inteiro antes do Render", "EQ de 4 pontos com MATCH, três caracteres e limitador de true peak"],
     shots: [
       ["No master", "Escolha o destino em cima: MUSIC (−14 LUFS), INTERNET (−16) ou TV (EBU R128, −23); o ⚙ ADVANCED aceita qualquer alvo e o ATSC. Aperte LISTEN, toque a sequência e aperte de novo: o volume vira ON TARGET. À esquerda, a EQ de 4 pontos que você arrasta sobre o espectro (MATCH sugere os pontos, FLAT zera). Embaixo, o caráter (TRANSPARENT, DENSE ou WARM) e o BYPASS no mesmo volume, para comparar de forma justa."],
+    ] },
+  { repo: "situa-plugin", name: "Situa", kind: "Som · espaço e futz", color: "#7ad3d6", icon: "room",
+    desc: "Coloca o diálogo num lugar: telefone, rádio, celular, sala grande, igreja, longe na rua, através da parede. Plugin VST3, AU e AAX para Media Composer, Pro Tools, Premiere, Resolve e Logic.",
+    feats: ["26 presets de situações de cinema, da TV no outro cômodo ao megafone", "Aparelho, espaço e parede em etapas, cada uma com seus knobs", "Codecs de verdade: telefone fixo, celular, HD e chamada com falhas"],
+    shots: [
+      ["TV no outro cômodo", "Escolha um preset à esquerda e a cadeia acende em cima: DEVICE (o aparelho: corte, saturação e CODEC), SPACE (a sala: tamanho, decay e distância) e BARRIER (a parede: MUFFLE abafa, LEAK deixa passar a fresta). O gráfico mostra o que acontece com a voz, e a cena mostra a situação vista de cima. A sala não muda o volume da fala: só a distância e a parede baixam."],
+      ["Igreja", "Só o espaço ligado: 45 m, 4,5 s de reverb e a voz a 10 m. A proporção entre voz direta e reverb sai da física da sala; a voz direta nunca atrasa, então a sincronia com a boca fica intacta. No AudioSuite, selecione um pouco além da fala para caber a cauda do reverb."],
     ] },
   { repo: "descompacta", name: "Descompacta", kind: "Utilitário", color: "#c084fc", icon: "box",
     desc: "Abre e cria arquivos compactados: zip, rar, 7z, iso e mais. Zips limpos, que chegam certos no Windows.",
