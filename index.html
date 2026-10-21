@@ -115,7 +115,7 @@
   .sl-top .sl-app::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c); box-shadow: 0 0 12px var(--c); }
   .sl-close { background: none; border: 0; color: var(--muted); font: inherit; letter-spacing: .08em; cursor: pointer; padding: 6px 0; }
   .sl-close:hover { color: var(--ink); }
-  .sl-stage { position: relative; display: grid; place-items: center; min-height: 0; padding: 0 72px; }
+  .sl-stage { position: relative; display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; min-height: 0; padding: 0 72px; }
   .sl-img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0 30px 80px -20px #000, 0 0 0 1px #ffffff14; }
   .sl-img.in { animation: slin .4s cubic-bezier(.2,.7,.2,1); }
   @keyframes slin { from { opacity: 0; transform: translateY(6px); } }
@@ -225,6 +225,7 @@ const ICONS = {
   search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21M7.5 10.5h1M10 8v5M12.5 9.5v2"/></svg>',
   spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3l1.8 4.7L16.5 9.5l-4.7 1.8L10 16l-1.8-4.7L3.5 9.5l4.7-1.8z"/><path d="M18 14l.9 2.1L21 17l-2.1.9L18 20l-.9-2.1L15 17l2.1-.9z"/></svg>',
   voice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+  meter: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3.5 17a8.5 8.5 0 0 1 17 0"/><path d="M12 17l4.5-5.5M6.5 11.5l1 1M12 8.5V10M17.5 11.5l-1 1M3 20h18"/></svg>',
 };
 // Para adicionar um app: inclua um item aqui. Os instaladores vêm sozinhos da última Release do repositório.
 const APPS = [
@@ -277,6 +278,12 @@ const APPS = [
     feats: ["Separa voz e ambiência, cada uma no seu volume", "Compressor só na voz", "Funciona também como AudioSuite"],
     shots: [
       ["No Media Composer", "O Decanta como AudioSuite no Avid: Separação diz o quanto separar a voz do fundo; Voz e Ambiência dão o volume de cada parte (no máximo, devolvem o som original). Embaixo, compressão e ganho só na voz, para o fundo não subir junto. Ajuste, ouça no Preview e clique em Render."],
+    ] },
+  { repo: "apura-plugin", name: "Apura", kind: "Som · loudness", color: "#b9d65a", icon: "meter",
+    desc: "Loudness e master para entrega. Diga para onde vai, aperte LISTEN e toque a sequência: o Apura acerta o volume numa escuta só, com o pico protegido. Plugin VST3, AU e AAX para Media Composer, Pro Tools, Premiere, Resolve e Logic.",
+    feats: ["MUSIC −14, INTERNET −16 ou TV EBU R128 −23 LUFS; ATSC no avançado", "No AudioSuite do Avid, mede o clip inteiro antes do Render", "EQ de 4 pontos com MATCH, três caracteres e limitador de true peak"],
+    shots: [
+      ["No master", "Escolha o destino em cima: MUSIC (−14 LUFS), INTERNET (−16) ou TV (EBU R128, −23); o ⚙ ADVANCED aceita qualquer alvo e o ATSC. Aperte LISTEN, toque a sequência e aperte de novo: o volume vira ON TARGET. À esquerda, a EQ de 4 pontos que você arrasta sobre o espectro (MATCH sugere os pontos, FLAT zera). Embaixo, o caráter (TRANSPARENT, DENSE ou WARM) e o BYPASS no mesmo volume, para comparar de forma justa."],
     ] },
   { repo: "descompacta", name: "Descompacta", kind: "Utilitário", color: "#c084fc", icon: "box",
     desc: "Abre e cria arquivos compactados: zip, rar, 7z, iso e mais. Zips limpos, que chegam certos no Windows.",
