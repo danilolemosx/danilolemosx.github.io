@@ -91,6 +91,7 @@
   .btn.main small { color: #0d0d0fb0; }
   .btn.main:hover { filter: brightness(1.08); }
   .soon { font-family: var(--mono); font-size: .78rem; color: var(--muted); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; }
+  .btn.leia { background: transparent; border-style: dashed; }
   .meta { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 14px; font-family: var(--mono); font-size: .7rem; color: var(--muted); }
   .meta a { text-decoration: none; border-bottom: 1px solid var(--line); }
   .meta a:hover { color: var(--ink); }
@@ -230,7 +231,7 @@ const ICONS = {
 };
 // Para adicionar um app: inclua um item aqui. Os instaladores vêm sozinhos da última Release do repositório.
 const APPS = [
-  { repo: "quadro", name: "Quadro", kind: "Montagem · estrutura", color: "#e8b44a", icon: "board",
+  { repo: "quadro", leia: "docs/LEIA-ME.txt", name: "Quadro", kind: "Montagem · estrutura", color: "#e8b44a", icon: "board",
     desc: "O quadro de cenas da sala de montagem, em versão digital. Um cartão por cena, organizado em partes, com o roteiro do lado.",
     feats: ["Quadro, lista e roteiro em PDF", "Arraste cartões, partes e frames", "Ficha de cada cena: resumo, personagens, duração"],
     shots: [
@@ -241,7 +242,7 @@ const APPS = [
       ["Sete fundos", "Aço, cortiça, feltro, madeira, lousa, kraft ou cinza: escolha o material do quadro, como na parede da sala de montagem."],
       ["Busca", "⌘F encontra qualquer cena por número, resumo ou personagem. Tudo salva sozinho e ⌘Z desfaz."],
     ] },
-  { repo: "destila", name: "Destila", kind: "Som · conversão", color: "#5aa9e6", icon: "wave",
+  { repo: "destila", leia: "docs/LEIA-ME.txt", name: "Destila", kind: "Som · conversão", color: "#5aa9e6", icon: "wave",
     desc: "Converte áudio, e o áudio de vídeos, para os formatos de edição e de entrega, mantendo o timecode do original.",
     feats: ["WAV, MXF Avid, AIFF, FLAC, MP3, AAC e mais", "Separa canais em monos com o nome das faixas", "Nunca sobrescreve arquivos"],
     shots: [
@@ -251,7 +252,7 @@ const APPS = [
       ["Mais formatos", "Em \"+ Outros\": E-AC3, OGG, OPUS, WMA, MP2, CAF e W64, com a qualidade em kbps para os compactados."],
       ["Ajustes", "Velocidade de timecode para arquivos que não informam a sua, e onde começam os que não têm timecode. E o Destila nunca sobrescreve: o novo ganha _2, _3…"],
     ] },
-  { repo: "sfx-finder", name: "SFX Finder", kind: "Som · efeitos", color: "#ff8a5c", icon: "search",
+  { repo: "sfx-finder", leia: "docs/LEIA-ME.txt", name: "SFX Finder", kind: "Som · efeitos", color: "#ff8a5c", icon: "search",
     desc: "Acha os sons do seu banco de efeitos e leva os escolhidos para uma pasta temática do projeto, copiados ou já convertidos para o Avid.",
     feats: ["Busca em português ou inglês: \"porta batendo\" acha \"door slam\"", "Ouça com espaço, troque com ↑↓, marque o que gostou", "Arraste direto para o Finder ou para um bin do Avid"],
     shots: [
@@ -259,7 +260,7 @@ const APPS = [
       ["Primeira vez", "Escolha a pasta do seu banco de sons. O app lê tudo uma vez e guarda um índice (62 mil sons levam uns 12 minutos num HD); dá para buscar enquanto ele termina. Depois, abre na hora."],
       ["A cesta", "Enter põe o som na cesta, com o nome traduzido e encurtado. Escolha a pasta do episódio e a subpasta temática, e copie o original ou converta em WAV, MXF Avid, AIFF ou MP3, com um ORIGEM.txt contando de onde veio cada som."],
     ] },
-  { repo: "sfx-maker", name: "SFX Maker", kind: "Som · foley por IA", color: "#f0607a", icon: "spark", dir: "sfxmaker",
+  { repo: "sfx-maker", leia: "LEIA-ME.txt", name: "SFX Maker", kind: "Som · foley por IA", color: "#f0607a", icon: "spark", dir: "sfxmaker",
     desc: "Foley guia para o offline. Exporte um AAF consolidado do Avid: o app gera um som para cada clipe e devolve um AAF sincronizado. Tudo roda no seu Mac; nada do material sai da máquina.",
     feats: ["Um SFX por clipe da V1, com HunyuanVideo-Foley", "Descreva o som em português, ou deixe o app decidir pela imagem", "AAF de volta no timecode, mais WAVs 48 kHz / 24 bit"],
     extra: "+ ~16 GB na 1ª abertura",
@@ -347,7 +348,7 @@ async function render(app) {
     dl.innerHTML = files.map(({ a, k }) => {
       const main = first && k.os === os; if (main) first = false;
       return `<a class="btn${main ? " main" : ""}" href="${a.browser_download_url}">${k.label}<small>${k.sub} · ${mb(a.size)}${app.extra ? ` ${app.extra}` : ""}</small></a>`;
-    }).join("");
+    }).join("") + (app.leia ? `<a class="btn leia" href="${page}/blob/HEAD/${app.leia}">Leia-me<small>instalar e usar</small></a>` : "");
     meta.innerHTML = `<span>${rel.tag_name} · ${new Date(rel.published_at).toLocaleDateString("pt-BR")}</span>
       <span><a href="${page}/releases">novidades</a> · <a href="${page}">código-fonte</a></span>`;
   } catch (e) {
