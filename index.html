@@ -227,6 +227,7 @@ const ICONS = {
   spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3l1.8 4.7L16.5 9.5l-4.7 1.8L10 16l-1.8-4.7L3.5 9.5l4.7-1.8z"/><path d="M18 14l.9 2.1L21 17l-2.1.9L18 20l-.9-2.1L15 17l2.1-.9z"/></svg>',
   voice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
   meter: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3.5 17a8.5 8.5 0 0 1 17 0"/><path d="M12 17l4.5-5.5M6.5 11.5l1 1M12 8.5V10M17.5 11.5l-1 1M3 20h18"/></svg>',
+  frame: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>',
   room:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6v10H3z"/><path d="M9 15.5a3 3 0 0 1 0-3M12 17.5a6 6 0 0 1 0-7M6.5 14h.01"/></svg>',
 };
 // Para adicionar um app: inclua um item aqui. Os instaladores vêm sozinhos da última Release do repositório.
@@ -274,6 +275,24 @@ const APPS = [
     shots: [
       ["Arraste o AAF", "Exporte do Avid com Consolidate e a mídia embutida. Cada clipe da V1 vira uma linha: descreva o som em português (\"passos de bota na grama\", não \"soldado caminhando\") ou deixe em branco para o app decidir pela imagem. O AAF de saída volta com os sons no timecode certo, numa pasta \"SFX MAKER\" ao lado do original."],
       ["Preparar este Mac", "Na primeira vez, o app baixa o motor de IA: uns 16 GB, de 15 minutos a 1 hora conforme a internet. Depois funciona sem internet. Em Macs de 16 GB, ele entra em modo econômico."],
+    ] },
+  { repo: "revela", leia: "docs/LEIA-ME.txt", name: "Revela", kind: "Imagem · IA local", color: "#e23b30", icon: "frame",
+    desc: "Gere e edite imagens com IA sem sair do Mac: o plano que faltou, um insert, uma tela de celular, um fundo, um storyboard. Escreva em português; o app mostra o prompt em inglês antes de gerar.",
+    feats: ["Criar do zero ou editar 1 ou 2 fotos, em etapas", "Termos de câmera: plano geral, plongée, 50 mm, película", "Prévia ao vivo, fila e cópia 1920×1080 para o Avid"],
+    extra: "+ ~28 GB na 1ª abertura",
+    req: [
+      ["Tamanho", "<b>grande</b>: o instalador é pequeno, mas na primeira abertura o app baixa o motor e os modelos de IA: <b>~28 GB</b>, de 30 min a 2 h conforme a internet. Quem já usa o ComfyUI Desktop com o FLUX.2 Klein 4B baixa só 2,5 GB"],
+      ["Disco", "<b>~35 GB livres</b>"],
+      ["Mac", "só com chip M (M1 a M4), macOS 12.3 ou mais novo"],
+      ["Memória", "<b>32 GB</b>; com 16 GB funciona, mas bem mais lento"],
+      ["Tempo", "~1 min por imagem na qualidade rápida (Mac de 32 GB); a primeira depois de abrir demora uns 5 min"],
+      ["Depois", "funciona sem internet, e nada sai do Mac"],
+    ],
+    shots: [
+      ["Criar do zero", "Escreva em português o que quer ver. O tradutor, que roda no próprio Mac, mostra o prompt em inglês que vai para a IA: SÓ TRADUZIR é fiel ao pedido, DETALHAR acrescenta luz, lente e textura. Os botões de câmera (plano médio, película 35 mm…) entram como termos técnicos."],
+      ["Editar foto", "Arraste uma ou duas fotos (ou cole um print com ⌘V) e diga o que muda. A imagem vai aparecendo ao vivo, com o tempo que falta; + FILA guarda pedidos para gerar em sequência enquanto você trabalha."],
+      ["Etapas e Avid", "Cada resultado pode virar a foto da próxima edição, e as etapas ficam embaixo da imagem. O seed e o pedido ficam gravados no PNG. PARA O AVID faz uma cópia 1920×1080, preenchendo o quadro ou com tarja."],
+      ["Preparar este Mac", "Na primeira abertura, o Revela baixa o motor (ComfyUI), os modelos FLUX.2 Klein 4B e o tradutor: uns 28 GB. Se a internet cair, ele continua de onde parou. Depois funciona sem internet."],
     ] },
   { repo: "decanta-plugin", leia: "docs/LEIA-ME.txt", name: "Decanta", kind: "Som · plugin", color: "#3ec29a", icon: "voice", coverPos: "center 45%",
     desc: "Limpeza de diálogo com DeepFilterNet. Plugin VST3, AU e AAX para Media Composer, Pro Tools, Premiere, Resolve e Logic.",
